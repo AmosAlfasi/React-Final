@@ -1,0 +1,11 @@
+.user {
+    margin: 8px 16px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.user :hover {
+    cursor: pointer;
+    color: cornflowerblue;
+}

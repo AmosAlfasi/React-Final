@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import './App.css';
 import UserItem from './components/UserItem';
 import Card from 'react-bootstrap/Card';
+import { Button } from 'react-bootstrap';
 import Avatar from './image/avatar.svg';
+import Search from './components/Search';
 
-const users = [
+const initUsers = [
   {
     key: 0,
     firstName: 'diana',
@@ -186,22 +188,47 @@ const users = [
 
 function App() {
   const [showInfo, setShowInfo] = useState(false);
-  // const [selectedUser, setUserSelected] = useState();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setusers] = useState(initUsers);
+  const [filteredUsers, setFilteredUsers] = useState(initUsers);
 
-  // const showInfoHandler = () => {
-  //   setShowInfo(!showInfo)
-  // }
+  const showInfoHandler = (id) => {
+    setShowInfo(!showInfo);
+    setSelectedUser((prev) => {
+      const temp = users.find(user => user.id === id);
+      return temp;
+    });
+  }
+
+  const deleteUser = id => {
+    setFilteredUsers(prevUsers => {
+      const updatedUsers = prevUsers.filter(user => user.id !== id)
+      return updatedUsers
+    })
+    setusers(prevUsers => {
+      const updatedUsers = prevUsers.filter(user => user.id !== id)
+      return updatedUsers
+    })
+  }
+
+  const onSearchChange = value => {
+    setFilteredUsers(users.filter(user => user.firstName.includes(value)))
+  }
+
   return (
     <div className='content' >
-      {users.map((user) =>
-        <Card >
-          <Card.Img variant="top" src={Avatar} />
-          <Card.Body>
-            <UserItem key={user.key} id={user.id} firstName={user.firstName} lastName={user.lastName} />
-          </Card.Body>
-        </Card>
-
-      )}
+      <Search onSearchChange={onSearchChange}></Search>
+      <div className='users'>
+        {filteredUsers.map((user) =>
+          <Card >
+            <Card.Img variant="top" src={Avatar} />
+            <Card.Body >
+              <UserItem key={user.key} id={user.id} firstName={user.firstName} lastName={user.lastName} onShowInfo={showInfoHandler} />
+              <Button variant="outline-primary" onClick={() => deleteUser(user.id)}>Delete User</Button>
+            </Card.Body>
+          </Card>
+        )}
+      </div>
     </div >
   );
 }

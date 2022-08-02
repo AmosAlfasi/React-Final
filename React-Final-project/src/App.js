@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import './App.css';
 import UserItem from './components/UserItem';
 import Card from 'react-bootstrap/Card';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import Avatar from './image/avatar.svg';
 import Search from './components/Search';
+import UserInfo from './components/UserInfo';
 
 const initUsers = [
   {
@@ -191,6 +192,7 @@ function App() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setusers] = useState(initUsers);
   const [filteredUsers, setFilteredUsers] = useState(initUsers);
+  const [show, setShow] = useState(false);
 
   const showInfoHandler = (id) => {
     setShowInfo(!showInfo);
@@ -198,6 +200,7 @@ function App() {
       const temp = users.find(user => user.id === id);
       return temp;
     });
+    setShow(true);
   }
 
   const deleteUser = id => {
@@ -212,8 +215,10 @@ function App() {
   }
 
   const onSearchChange = value => {
-    setFilteredUsers(users.filter(user => user.firstName.includes(value)))
+    setFilteredUsers(users.filter(user => user.firstName.includes(value) || user.lastName.includes(value)))
   }
+
+  const onClosePopup = () => setShow(false);
 
   return (
     <div className='content' >
@@ -229,6 +234,7 @@ function App() {
           </Card>
         )}
       </div>
+      {show && (<UserInfo onClosePopup={onClosePopup} show={true}></UserInfo>)}
     </div >
   );
 }

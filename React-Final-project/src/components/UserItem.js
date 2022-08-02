@@ -10,7 +10,6 @@ const UserItem = props => {
     return (
         <div onClick={handleClick} className='user'>
             <span > {props.firstName}  {props.lastName} </span>
-
         </div>
     )
 }

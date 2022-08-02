@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputGroup, Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import './Search.css';
 
 const Search = props => {

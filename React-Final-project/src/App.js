@@ -34,7 +34,7 @@ const initUsers = [
 	},
 	{
 		key: 3,
-		firstName: "test",
+		firstName: "amos",
 		lastName: "test",
 		id: "3",
 		birthday: "1/1/200",
@@ -213,11 +213,48 @@ function App() {
 		});
 	};
 
+	const addUser = () => {
+		console.log(initUsers);
+		// setFilteredUsers(() => {
+		// 	initUsers.push({
+		// 		key: initUsers.length,
+		// 		firstName: "user",
+		// 		lastName: "added",
+		// 		id: "1000",
+		// 		birthday: "1/1/200",
+		// 		maritalSatus: "married",
+		// 	});
+
+		// 	return initUsers;
+		// });
+		// setusers(() => {
+		// 	return initUsers;
+		// });
+
+		initUsers.push({
+			key: initUsers.length,
+			firstName: "user",
+			lastName: "added",
+			id: "1000",
+			birthday: "1/1/200",
+			maritalSatus: "married",
+		});
+	};
+
 	const onSearchChange = (value) => {
 		setFilteredUsers(
 			users.filter(
-				(user) =>
-					user.firstName.includes(value) || user.lastName.includes(value)
+				(user) => {
+					const temp = `${user.firstName}${user.lastName}`;
+					const valTemp = value.slice(" ").toLowerCase();
+					console.log(`temp:${temp}`);
+					console.log(`valTemp:${valTemp}`);
+					console.log(temp.toLowerCase().includes(valTemp));
+					return temp
+						.toLowerCase()
+						.includes(value.replace(/\s/g, "").toLowerCase());
+				}
+				//user.firstName.includes(value) || user.lastName.includes(value)
 			)
 		);
 	};
@@ -226,6 +263,7 @@ function App() {
 
 	return (
 		<div className="content">
+			<Button onClick={() => addUser()}>Add User</Button>
 			<Search onSearchChange={onSearchChange}></Search>
 			<div className="users">
 				{filteredUsers.map((user) => (
@@ -239,6 +277,12 @@ function App() {
 								lastName={user.lastName}
 								onShowInfo={showInfoHandler}
 							/>
+							<Button
+								variant="outline-primary"
+								onClick={() => console.log(user.id)}
+							>
+								Add Cost
+							</Button>
 
 							<Button
 								variant="outline-primary"
@@ -254,10 +298,7 @@ function App() {
 				<UserInfo
 					onClosePopup={onClosePopup}
 					show={true}
-					id={selectedUser.id}
-					name={`${selectedUser.firstName} ${selectedUser.lastName}`}
-					birthday={selectedUser.birthday}
-					maritalSatus={selectedUser.maritalSatus}
+					selectedUser={selectedUser}
 				></UserInfo>
 			)}
 		</div>

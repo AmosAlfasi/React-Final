@@ -10,12 +10,15 @@ const UserInfo = (props) => {
 		props.onClosePopup(false);
 	};
 
+	const details = Object.keys(props.selectedUser).map((key) => (
+		<div>
+			{key} : {props.selectedUser[key]}
+		</div>
+	));
+
 	return (
 		<Modal show={show} onHide={handleClose}>
-			<div>{props.id}</div>
-			<div>{props.name}</div>
-			<div>{props.birthday}</div>
-			<div>{props.maritalSatus}</div>
+			{details}
 		</Modal>
 	);
 };

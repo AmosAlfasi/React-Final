@@ -7,6 +7,7 @@ import Avatar from "./image/avatar.svg";
 import Search from "./components/filters/Search";
 import UserInfo from "./components/users/UserInfo";
 import AddUser from "./components/users/AddUser";
+import AddCost from "./components/costs/AddCost";
 
 const initUsers = [
 	{
@@ -58,6 +59,7 @@ function App() {
 	const [filteredUsers, setFilteredUsers] = useState(initUsers);
 	const [show, setShow] = useState(false);
 	const [showAddUser, setShowAddUser] = useState(false);
+	const [showAddCost, setShowAddCost] = useState(false);
 
 	const showInfoHandler = (id) => {
 		setShowInfo(!showInfo);
@@ -66,6 +68,14 @@ function App() {
 			return temp;
 		});
 		setShow(true);
+	};
+
+	const showAddCostHandler = (id) => {
+		setSelectedUser((prev) => {
+			const temp = users.find((user) => user.id === id);
+			return temp;
+		});
+		setShowAddCost(true)
 	};
 
 	const showAddUserHandler = () => {
@@ -115,6 +125,19 @@ function App() {
 		}
 	};
 
+	const onCloseAddCostPopup = (params) => {
+		setShowAddCost(false)
+		console.log(params);
+		// if (params.newUser) {
+		// 	setUsers(prevValue => {
+		// 		return [...prevValue, params.newUser]
+		// 	})
+		// 	setFilteredUsers(prevValue => {
+		// 		return [...prevValue, params.newUser]
+		// 	})
+		// }
+	};
+
 	return (
 		<div className="content">
 			<div className="header">
@@ -141,11 +164,10 @@ function App() {
 							/>
 							<Button
 								variant="outline-primary"
-								onClick={() => console.log(user.id)}
+								onClick={() => showAddCostHandler(user.id)}
 							>
 								Add Cost
 							</Button>
-
 							<Button
 								variant="outline-primary"
 								onClick={() => deleteUser(user.id)}
@@ -156,6 +178,11 @@ function App() {
 					</Card>
 				))}
 			</div>
+			{showAddCost && (<AddCost
+				onClosePopup={onCloseAddCostPopup}
+				show={true}
+				selectedUser={selectedUser}
+			></AddCost>)}
 			{show && (
 				<UserInfo
 					onClosePopup={onClosePopup}

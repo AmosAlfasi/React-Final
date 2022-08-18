@@ -17,6 +17,7 @@ const initUsers = [
 		id: "0",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 1,
@@ -25,6 +26,7 @@ const initUsers = [
 		id: "1",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 2,
@@ -33,6 +35,7 @@ const initUsers = [
 		id: "2",
 		birthday: "1/1/200",
 		maritalSatus: "Open for ",
+		costs: [],
 	},
 	{
 		key: 3,
@@ -41,6 +44,7 @@ const initUsers = [
 		id: "3",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 4,
@@ -49,6 +53,7 @@ const initUsers = [
 		id: "4",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 ];
 
@@ -72,6 +77,7 @@ function App() {
 
 	const showAddCostHandler = (id) => {
 		setSelectedUser((prev) => {
+			console.log(users);
 			const temp = users.find((user) => user.id === id);
 			return temp;
 		});
@@ -124,15 +130,18 @@ function App() {
 
 	const onCloseAddCostPopup = (params) => {
 		setShowAddCost(false);
-		console.log(params);
-		// if (params.newUser) {
-		// 	setUsers(prevValue => {
-		// 		return [...prevValue, params.newUser]
-		// 	})
-		// 	setFilteredUsers(prevValue => {
-		// 		return [...prevValue, params.newUser]
-		// 	})
-		// }
+		setSelectedUser((prev) => {
+			const temp = users.find((user) => user.id === params.userCosts.id);
+			temp.costs.push(params.userCosts.costs);
+		});
+
+		// setUsers((prevUsers) => {
+		// 	prevUsers.forEach((user) => {
+		// 		if (user.id === params.userCosts.id) {
+		// 			user.costs.push(params.userCosts.costs);
+		// 		}
+		// 	});
+		// });
 	};
 
 	return (

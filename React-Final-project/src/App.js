@@ -17,6 +17,7 @@ const initUsers = [
 		id: "0",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 1,
@@ -25,6 +26,7 @@ const initUsers = [
 		id: "1",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 2,
@@ -33,6 +35,7 @@ const initUsers = [
 		id: "2",
 		birthday: "1/1/200",
 		maritalSatus: "Open for ",
+		costs: [],
 	},
 	{
 		key: 3,
@@ -41,6 +44,7 @@ const initUsers = [
 		id: "3",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 	{
 		key: 4,
@@ -49,6 +53,7 @@ const initUsers = [
 		id: "4",
 		birthday: "1/1/200",
 		maritalSatus: "married",
+		costs: [],
 	},
 ];
 
@@ -72,15 +77,16 @@ function App() {
 
 	const showAddCostHandler = (id) => {
 		setSelectedUser((prev) => {
+			console.log(users);
 			const temp = users.find((user) => user.id === id);
 			return temp;
 		});
-		setShowAddCost(true)
+		setShowAddCost(true);
 	};
 
 	const showAddUserHandler = () => {
 		setShowAddUser(!showAddUser);
-	}
+	};
 
 	const deleteUser = (id) => {
 		setFilteredUsers((prevUsers) => {
@@ -93,61 +99,60 @@ function App() {
 		});
 	};
 
-
 	const onSearchChange = (value) => {
 		setFilteredUsers(
-			users.filter(
-				(user) => {
-					const temp = `${user.firstName}${user.lastName}`;
-					const valTemp = value.slice(" ").toLowerCase();
-					console.log(`temp:${temp}`);
-					console.log(`valTemp:${valTemp}`);
-					console.log(temp.toLowerCase().includes(valTemp));
-					return temp
-						.toLowerCase()
-						.includes(value.replace(/\s/g, "").toLowerCase());
-				}
-			)
+			users.filter((user) => {
+				const temp = `${user.firstName}${user.lastName}`;
+				const valTemp = value.slice(" ").toLowerCase();
+				console.log(`temp:${temp}`);
+				console.log(`valTemp:${valTemp}`);
+				console.log(temp.toLowerCase().includes(valTemp));
+				return temp
+					.toLowerCase()
+					.includes(value.replace(/\s/g, "").toLowerCase());
+			})
 		);
 	};
 
 	const onClosePopup = () => setShow(false);
 
 	const onCloseAddUserPopup = (params) => {
-		setShowAddUser(false)
+		setShowAddUser(false);
 		if (params.newUser) {
-			setUsers(prevValue => {
-				return [...prevValue, params.newUser]
-			})
-			setFilteredUsers(prevValue => {
-				return [...prevValue, params.newUser]
-			})
+			setUsers((prevValue) => {
+				return [...prevValue, params.newUser];
+			});
+			setFilteredUsers((prevValue) => {
+				return [...prevValue, params.newUser];
+			});
 		}
 	};
 
 	const onCloseAddCostPopup = (params) => {
-		setShowAddCost(false)
-		console.log(params);
-		// if (params.newUser) {
-		// 	setUsers(prevValue => {
-		// 		return [...prevValue, params.newUser]
-		// 	})
-		// 	setFilteredUsers(prevValue => {
-		// 		return [...prevValue, params.newUser]
-		// 	})
-		// }
+		setShowAddCost(false);
+		setSelectedUser((prev) => {
+			const temp = users.find((user) => user.id === params.userCosts.id);
+			temp.costs.push(params.userCosts.costs);
+		});
+
+		// setUsers((prevUsers) => {
+		// 	prevUsers.forEach((user) => {
+		// 		if (user.id === params.userCosts.id) {
+		// 			user.costs.push(params.userCosts.costs);
+		// 		}
+		// 	});
+		// });
 	};
 
 	return (
 		<div className="content">
 			<div className="header">
 				<Search onSearchChange={onSearchChange}></Search>
-				<Button variant="primary" onClick={() => setShowAddUser(!showAddUser)}>Add User</Button>
+				<Button variant="primary" onClick={() => setShowAddUser(!showAddUser)}>
+					Add User
+				</Button>
 				{showAddUser && (
-					<AddUser
-						onClosePopup={onCloseAddUserPopup}
-						show={true}
-					></AddUser>
+					<AddUser onClosePopup={onCloseAddUserPopup} show={true}></AddUser>
 				)}
 			</div>
 			<div className="users">
@@ -178,11 +183,13 @@ function App() {
 					</Card>
 				))}
 			</div>
-			{showAddCost && (<AddCost
-				onClosePopup={onCloseAddCostPopup}
-				show={true}
-				selectedUser={selectedUser}
-			></AddCost>)}
+			{showAddCost && (
+				<AddCost
+					onClosePopup={onCloseAddCostPopup}
+					show={true}
+					selectedUser={selectedUser}
+				></AddCost>
+			)}
 			{show && (
 				<UserInfo
 					onClosePopup={onClosePopup}

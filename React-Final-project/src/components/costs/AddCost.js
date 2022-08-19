@@ -35,48 +35,64 @@ const AddCost = props => {
     }
 
     return (
-        <Modal show={show} onHide={handleClose} >
+        <Modal show={show} onHide={handleClose} size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered >
             <div className="add-cost" >
                 <div className="title">{`Add cost to user ${props.selectedUser.id}`}</div>
                 <Form>
                     <Form.Group className="form-group">
-                        <Form.Label>Name:
+                        <Form.Label className="form-label">Name:
                         </Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                        <div className='control-container'>
+
+                            <Form.Control
+                                class="form-control"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
                     </Form.Group>
                     <Form.Group className="form-group">
-                        <Form.Label>Description:
+                        <Form.Label className="form-label">Description:
                         </Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
+                        <div className='control-container'>
+                            <Form.Control
+                                class="form-control"
+                                type="text"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </div>
                     </Form.Group>
                     <Form.Group className="form-group">
-                        <Form.Label>Cost:
+                        <Form.Label className="form-label">Cost:
                         </Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={cost}
-                            onChange={(e) => setCost(e.target.value)}
-                        />
+                        <div className='control-container'>
+                            <Form.Control
+                                class="form-control"
+                                type="text"
+                                value={cost}
+                                onChange={(e) => setCost(e.target.value)}
+                            />
+                        </div>
                     </Form.Group>
                     <Form.Group className="form-group">
-                        <Form.Label>Month:</Form.Label>
-                        <Form.Select onChange={(e) => setMonth(e.target.value)}>
-                            {months.map(d => <option value={d}>{d}</option>)}
-                        </Form.Select>
+                        <Form.Label className="form-label">Month:</Form.Label>
+                        <div className='control-container'>
+                            <Form.Select class="form-control" onChange={(e) => setMonth(e.target.value)}>
+                                {months.map(d => <option value={d}>{d}</option>)}
+                            </Form.Select>
+                        </div>
                     </Form.Group>
                     <Form.Group className="form-group">
-                        <Form.Label>Year:</Form.Label>
-                        <Form.Select onChange={(e) => setYear(e.target.value)}>
-                            {years.map(d => <option value={d}>{d}</option>)}
-                        </Form.Select>
+                        <Form.Label className="form-label">Year:</Form.Label>
+                        <div className='control-container'>
+                            <Form.Select class="form-control" onChange={(e) => setYear(e.target.value)}>
+                                {years.map(d => <option value={d}>{d}</option>)}
+                            </Form.Select>
+                        </div>
                     </Form.Group>
                     <Button className="submit" type="submit" onClick={submitHandler}>Submit</Button>
                 </Form>

@@ -1,0 +1,25 @@
+.add-cost {
+    margin: 16px 16px;
+
+    Form {
+        display: block;
+
+        .form-group {
+            display: flex;
+            margin: 16px 0px;
+
+            .control-container {
+                width: 100%;
+
+                .form-control {
+                    width: 600px;
+                    float: right;
+                }
+            }
+        }
+    }
+
+    Button {
+        float: right;
+    }
+}
